@@ -6,6 +6,7 @@
 - [概要](#概要)
 - [エラー](#エラー)
   - [Error: Main method not found in the file~](#error-main-method-not-found-in-the-file)
+- [関連情報](#関連情報)
 
 <!-- /TOC -->
 
@@ -14,7 +15,7 @@
 - 目的
   - Java のキャッチアップ、検証環境、個人用ツール、なんでも入れる。
 - 参考教材
-  - [実践 SpringBoot ~SpringBoot Advanced Tutorial~](https://www.techpit.jp/courses/232)
+  - [実践 SpringBoot \~SpringBoot Advanced Tutorial\~](https://www.techpit.jp/courses/232)
 - 使用技術
   - Java
   - SpringBoot
@@ -39,3 +40,7 @@
 - 解決しない時に見た記事
   - [workspaceStorage フォルダを消す](https://teratail.com/questions/t2833q7nv8wior)
   - [シンタックスの見直し](https://ameblo.jp/taktak0/entry-12372913263.html)
+
+# 関連情報
+
+- [javaCrud（簡易サンプルリポジトリ）](https://github.com/jun0222/javaCrud)
