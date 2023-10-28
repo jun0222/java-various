@@ -5,6 +5,9 @@
 - [目次](#目次)
 - [概要](#概要)
 - [コマンド](#コマンド)
+  - [gradle のビルド](#gradle-のビルド)
+  - [起動](#起動)
+  - [デバッグ](#デバッグ)
 - [エラー](#エラー)
   - [Error: Main method not found in the file~](#error-main-method-not-found-in-the-file)
   - [Incompatible because this component declares~](#incompatible-because-this-component-declares)
@@ -26,10 +29,19 @@
 
 # コマンド
 
+## gradle のビルド
+
 ```bash
-# gradle のビルド
 ./gradlew build
 ```
+
+## 起動
+
+メイン関数近くの Run をクリック
+
+## デバッグ
+
+メイン関数近くの Debug をクリック
 
 # エラー
 
