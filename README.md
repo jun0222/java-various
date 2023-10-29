@@ -8,9 +8,11 @@
   - [gradle のビルド](#gradle-のビルド)
   - [起動](#起動)
   - [デバッグ](#デバッグ)
+- [ファイル概要](#ファイル概要)
 - [エラー](#エラー)
   - [Error: Main method not found in the file~](#error-main-method-not-found-in-the-file)
   - [Incompatible because this component declares~](#incompatible-because-this-component-declares)
+  - [@SpringBootTest が import できない](#springboottest-が-import-できない)
 - [関連情報](#関連情報)
 
 <!-- /TOC -->
@@ -43,6 +45,13 @@
 
 メイン関数近くの Debug をクリック
 
+# ファイル概要
+
+- HelloWorld
+  - src/main/java/com/javarious/example/javavarious/app/controller/HelloController.java
+- HelloWorld のテストコード
+  - src/test/java/com/javarious/example/javavarious/api/HelloApiTest.java
+
 # エラー
 
 ## Error: Main method not found in the file~
@@ -74,6 +83,13 @@
   - [大まかな流れの参考記事 ※記事ないは zsh なので、bash 環境の場合注意](https://zenn.dev/hayato94087/articles/c0345e6c2c53e7)
   - 以下を bash_profile に書いて、`source ~/.bash_profile`を実行
   - `java -version`、`./gradlew build`を問題なく実行できた。
+
+## @SpringBootTest が import できない
+
+- 解決時にやったこと
+  - tree 出力して GPT 確認
+  - ディレクトリ構成が間違っていることを確認
+  - main ではなく test 配下に移動して解決
 
 ```bash
 # ~/.bash_profile
