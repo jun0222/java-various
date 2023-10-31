@@ -13,6 +13,8 @@
   - [Error: Main method not found in the file~](#error-main-method-not-found-in-the-file)
   - [Incompatible because this component declares~](#incompatible-because-this-component-declares)
   - [@SpringBootTest が import できない](#springboottest-が-import-できない)
+  - [DBUnit が import できない](#dbunit-が-import-できない)
+  - [javax.sql.DataSource が使えない](#javaxsqldatasource-が使えない)
 - [関連情報](#関連情報)
 
 <!-- /TOC -->
@@ -90,12 +92,28 @@
   - tree 出力して GPT 確認
   - ディレクトリ構成が間違っていることを確認
   - main ではなく test 配下に移動して解決
+  - .bash_profile に以下を追加して、`source ~/.bash_profile`を実行
 
 ```bash
 # ~/.bash_profile
 export PATH="/usr/local/opt/openjdk/bin:$PATH"
 export JAVA_HOME="/usr/local/opt/openjdk"
 ```
+
+## DBUnit が import できない
+
+- 解決時にやったこと
+  - build.gradle に`testImplementation "org.dbunit:dbunit:2.7.3"`を追加
+  - `./gradlew build`を実行
+  - VSCode で`Reload Window`と`Java: Reload project`を実行
+
+## javax.sql.DataSource が使えない
+
+- エラー詳細
+  - `@Autowired`をつけて`private DataSource dataSource;`と宣言しているのに、`org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'com.javarious.example.javavarious.api.HelloApiTest': Unsatisfied dependency expressed through field 'dataSource': No qualifying bean of type 'javax.sql.DataSource' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}`と出る。
+- 解決方法
+  - Google 検索して`@Autowired`など、アノテーションの問題という仮説を置く
+  - 教材の実装サンプルと違い、`@WebMvcTest(HelloController.class)`にしていたため、`@SpringBootTest`に変更、解決。
 
 # 関連情報
 
