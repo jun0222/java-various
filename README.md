@@ -15,6 +15,7 @@
   - [@SpringBootTest が import できない](#springboottest-が-import-できない)
   - [DBUnit が import できない](#dbunit-が-import-できない)
   - [javax.sql.DataSource が使えない](#javaxsqldatasource-が使えない)
+  - [200 になるはずのテストが 404](#200-になるはずのテストが-404)
 - [関連情報](#関連情報)
 
 <!-- /TOC -->
@@ -114,6 +115,17 @@ export JAVA_HOME="/usr/local/opt/openjdk"
 - 解決方法
   - Google 検索して`@Autowired`など、アノテーションの問題という仮説を置く
   - 教材の実装サンプルと違い、`@WebMvcTest(HelloController.class)`にしていたため、`@SpringBootTest`に変更、解決。
+
+## 200 になるはずのテストが 404
+
+- エラー詳細
+  - `java.lang.AssertionError: Status expected:[200] but was:[404]`となる
+  - src/test/java/com/javarious/example/javavarious/api/HelloApiTest.java の`testHello()`が失敗する
+- 解決時にやったこと
+  - エラーが発生している箇所は api リクエストの箇所と確認
+  - queryStrings という値を引数から取っているので内容を確認
+  - `test-user-name`としていた。本来は`?name=test-user-name`となるべき。間違った内容だと path に文字列を追加してしまうので、404 になる。
+  - 単にエラーを辿って順当に解決する。原因不明な場合は小さくプロトタイプを動かす。動作するものと比較する。
 
 # 関連情報
 
