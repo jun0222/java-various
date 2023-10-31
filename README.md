@@ -9,6 +9,12 @@
   - [起動](#起動)
   - [デバッグ](#デバッグ)
 - [ファイル概要](#ファイル概要)
+- [実務利用のためのナレッジ](#実務利用のためのナレッジ)
+  - [動作確認](#動作確認)
+  - [postman での動作確認を prj に合わせて curl で](#postman-での動作確認を-prj-に合わせて-curl-で)
+    - [get](#get)
+    - [post](#post)
+  - [教材に沿って、キリの良いタイミングでまとめて色々必要そうなことを書く](#教材に沿ってキリの良いタイミングでまとめて色々必要そうなことを書く)
 - [エラー](#エラー)
   - [Error: Main method not found in the file~](#error-main-method-not-found-in-the-file)
   - [Incompatible because this component declares~](#incompatible-because-this-component-declares)
@@ -54,6 +60,56 @@
   - src/main/java/com/javarious/example/javavarious/app/controller/HelloController.java
 - HelloWorld のテストコード
   - src/test/java/com/javarious/example/javavarious/api/HelloApiTest.java
+
+# 実務利用のためのナレッジ
+
+## 動作確認
+
+ビルドすると最低限動作確認ができるので、何か実装したらビルドはする。
+
+## postman での動作確認を prj に合わせて curl で
+
+### get
+
+`postman`
+
+```
+- HTTPメソッドをGETにします。
+- URLにhttp://localhost:8080/chat-backend/channelsを入力します。
+- Bodyタブを開きます。
+- Bodyタイプをnoneにします。
+- Sendをクリックします。
+```
+
+`curl`
+
+```bash
+curl -X GET http://localhost:8080/java-various/channels
+```
+
+### post
+
+`postman`
+
+```
+- HTTPメソッドをPOSTにします。
+- URLにhttp://localhost:8080/chat-backend/channelsを入力します。
+- Bodyタブを開きます。
+- Bodyタイプをrawにします。
+- rawのテキストタイプをJSONにします。
+- Body本文に{"name": "hoge"}を入力します。
+- Sendをクリックします。
+```
+
+`curl`
+
+```bash
+curl -X POST http://localhost:8080/java-various/channels \
+     -H "Content-Type: application/json" \
+     -d '{"name": "hoge"}'
+```
+
+## 教材に沿って、キリの良いタイミングでまとめて色々必要そうなことを書く
 
 # エラー
 
