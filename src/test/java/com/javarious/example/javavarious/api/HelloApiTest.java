@@ -1,6 +1,7 @@
 package com.javarious.example.javavarious.api;
 
 import java.net.URL;
+import java.util.stream.Stream;
 
 import javax.sql.DataSource;
 
@@ -8,7 +9,9 @@ import org.dbunit.Assertion;
 import org.dbunit.DataSourceDatabaseTester;
 import org.dbunit.IDatabaseTester;
 import org.dbunit.dataset.csv.CsvURLDataSet;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -28,32 +31,47 @@ public class HelloApiTest {
         @Autowired
         private DataSource dataSource;
 
-        @Test
-        public void testHello() throws Exception {
+        @ParameterizedTest
+        @MethodSource("helloTestProvider")
+        public void helloTest(String queryString, String expectedBody, String dbPath) throws Exception {
 
                 IDatabaseTester databaseTester = new DataSourceDatabaseTester(dataSource);
-                URL givenUrl = this.getClass().getResource("/hello/hello/default/given/");
+                URL givenUrl = this.getClass().getResource("/hello/hello/" + dbPath + "/given/");
                 databaseTester.setDataSet(new CsvURLDataSet(givenUrl));
                 databaseTester.onSetup();
 
                 mockMvc.perform(
                                 MockMvcRequestBuilders
-                                                .get("/hello?name=test-user-name")
+                                                .get("/hello" + queryString)
                                                 .accept(org.springframework.http.MediaType.APPLICATION_JSON))
                                 .andExpect(MockMvcResultMatchers.status().isOk())
-                                .andExpect((result) -> JSONAssert.assertEquals("""
-                                                {
-                                                  "message": "Hello, test-user-name"
-                                                }
-                                                """,
+                                .andExpect((result) -> JSONAssert.assertEquals(
+                                                expectedBody,
                                                 result.getResponse().getContentAsString(),
                                                 false));
 
                 var actualDataSet = databaseTester.getConnection().createDataSet();
                 var actualTestTable = actualDataSet.getTable("test");
-                var expectedUrl = this.getClass().getResource("/hello/hello/default/expected/");
+                URL expectedUrl = this.getClass().getResource("/hello/hello/" + dbPath + "/expected/");
                 var expectedDataSet = new CsvURLDataSet(expectedUrl);
                 var expectedTestTable = expectedDataSet.getTable("test");
                 Assertion.assertEquals(expectedTestTable, actualTestTable);
+        }
+
+        private static Stream<Arguments> helloTestProvider() {
+                return Stream.of(
+                                Arguments.arguments("?name=test-user-name", """
+                                                {
+                                                  "message": "Hello, test-user-name"
+                                                }
+                                                """, "default"),
+                                Arguments.arguments(
+                                                "?name=techpit",
+                                                """
+                                                                {
+                                                                  "message": "Hello, techpit"
+                                                                }
+                                                                """,
+                                                "techpit"));
         }
 }
